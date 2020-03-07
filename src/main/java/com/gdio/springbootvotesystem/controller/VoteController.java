@@ -46,7 +46,8 @@ public class VoteController {
         TempData.PAGENOW+=1;
         //当前是倒数第二页，即将进入最后一页
         if(TempData.PAGENOW==(int)TempData.PAGECOUNT){
-            List<Vote> allVote=voteMapper.getVoteLimit((TempData.PAGENOW-1)*(int)TempData.EACHPAGE,(int)TempData.LASTPAGE);
+            System.out.println((TempData.PAGENOW-1)*(int)TempData.EACHPAGE+":"+TempData.LASTPAGE);
+            List<Vote> allVote=voteMapper.getVoteLimit((TempData.PAGENOW-1)*(int)TempData.EACHPAGE,TempData.LASTPAGE);
             Collections.sort(allVote);
             map.put("allVote",allVote);
         }
@@ -88,7 +89,6 @@ public class VoteController {
         Vote vote=voteMapper.findVoteById(TempData.getVid());
         vote.setOptions(optionMapper.findOptionByVid(vote.getId()));
         List<Echart> list=MyTool.xAxisdata(vote);
-        System.out.println(list);
         return list;
     }
     @RequestMapping("toshowtable")
@@ -134,7 +134,6 @@ public class VoteController {
             optionMapper.insertOption(option);
         }
         vote.setPublisher(TempData.LOGINUSER.getUserName());
-
         voteMapper.insertVote(vote);
         //刷新一下总投票数
         TempData.VOTECOUNT+=1;
@@ -152,8 +151,7 @@ public class VoteController {
         if(TempData.VOTECOUNT==0){
             TempData.VOTECOUNT=voteMapper.getVoteCount();
             TempData.PAGECOUNT=(int)Math.ceil(TempData.VOTECOUNT/TempData.EACHPAGE);
-            TempData.LASTPAGE=(int)(TempData.VOTECOUNT%TempData.EACHPAGE);
-            System.out.println(TempData.LASTPAGE);
+            TempData.LASTPAGE=(int)(TempData.VOTECOUNT%(int)TempData.EACHPAGE);
         }
         List<Vote> allVote=voteMapper.getVoteLimit(0,(int)TempData.EACHPAGE);
         Collections.sort(allVote);
