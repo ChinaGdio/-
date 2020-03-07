@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.themeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>管理员登陆</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/tooplate.css">
+</head>
+
+<body id="register">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <header class="mb-5">
+                    <h3 class="mt-0 white-text">管理员登陆</h3>
+                    <p class="grey-text mb-4">这是网址后台管理入口</p>
+                    <p class="grey-text" th:text="${msg}"></p>
+                    </p>
+                </header>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <form th:action="@{managerLogin}" method="post" class="tm-signup-form">
+                    <div class="input-field">
+                        <input placeholder="账号" id="username" name="id" type="text" class="validate">
+                    </div>
+                    <div class="input-field">
+                        <input placeholder="密码" id="password" name="password" type="password" class="validate">
+                    </div>
+                    <div class="text-right mt-4">
+                        <button type="submit" class="waves-effect btn-large btn-large-white px-4 tm-border-radius-0">进入</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <footer class="row tm-mt-big mb-3">
+            <div class="col-xl-12">
+                <p class="text-center grey-text text-lighten-2 tm-footer-text-small">
+                    Copyright &copy; 2018 Company Name 
+                    
+                    - Design:  Tooplate / More Templates <a href="#" target="_blank" title="投票门户">投票门户</a> - Collect from <a href="#" title="" target="_blank">GDIO</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/jquery-3.2.1.slim.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('select').formSelect();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.themeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>投票系统</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/tooplate.css">
+</head>
+
+<body id="home">
+    <div class="container tm-home-mt tm-home-container">
+        <div class="row">
+            <div class="col-12">
+                <div class="tm-home-left">
+                    <h1 class="tm-site-title" th:text="在线投票系统"></h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="tm-home-left mt-3 font-weight-light">
+                    <p class="tm-mb-35">这是一个简易的 <a href="">在线投票</a> 网站. 提供基本的投票功能.</p>
+                    <p class="tm-mb-35">觉得好用的点个赞.</p>
+                    <p th:text="${message}"></p>
+                </div>
+            </div><div class="tlinks"></div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <ul class="list-group tm-home-list tm-bg-black font-weight-light">
+                    <li class="d-flex justify-content-between align-items-center">
+                        <a href="toRegister" class="tm-white-text">用户注册</a>
+                    </li>
+                    <li class="d-flex justify-content-between align-items-center">
+                        <a href="login.html" class="tm-white-text">用户登录</a>
+                    </li>
+                    <li class="d-flex justify-content-between align-items-center">
+                        <a href="signup.html" class="tm-white-text">管理员登陆</a>
+                    </li>
+                    <li class="d-flex justify-content-between align-items-center">
+                        <a th:href="@{survey.html}" class="tm-white-text">关于本站</a>
+                    </li>
+                    <li class="d-flex justify-content-between align-items-center">
+                        <a th:href="@{contact.html}" class="tm-white-text">联系我们</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <footer class="row tm-mt-big mb-3">
+        <div class="col-xl-12 text-center font-weight-light">
+            <p class="d-inline-block tm-bg-black white-text py-2 tm-px-5">
+                Copyright &copy; 2020 Company Name - Design:  Tooplate / More Templates <a href="#" target="_blank" title="">GDIO</a> - Collect from <a href="#" title="" target="_blank">PAGE</a>
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

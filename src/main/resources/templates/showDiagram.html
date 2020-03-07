@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.themeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    在线投票系统
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link href="../assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="../assets/demo/demo.css" rel="stylesheet" />
+
+</head>
+
+<body class="">
+  <div class="wrapper">
+    <div th:replace="temp::sidebar">
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle d-inline">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <a class="navbar-brand" href="javascript:void(0)">投票数据</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto">
+              <li class="search-bar input-group">
+                <button class="btn btn-link" id="search-button" data-toggle="modal" data-target="#searchModal"><i class="tim-icons icon-zoom-split" ></i>
+                  <span class="d-lg-none d-md-block">Search</span>
+                </button>
+              </li>
+              <li class="dropdown nav-item">
+                <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                  <div class="notification d-none d-lg-block d-xl-block"></div>
+                  <i class="tim-icons icon-sound-wave"></i>
+                  <p class="d-lg-none">
+                    Notifications
+                  </p>
+                </a>
+                <ul th:replace="temp::browse">
+                </ul>
+              </li>
+              <li class="dropdown nav-item">
+                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                  <div class="photo">
+                    <img src="../assets/img/anime3.png" alt="Profile Photo">
+                  </div>
+                  <b class="caret d-none d-lg-block d-xl-block"></b>
+                  <p class="d-lg-none">
+                    Log out
+                  </p>
+                </a>
+                <ul class="dropdown-menu dropdown-navbar">
+                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Profile</a></li>
+                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Settings</a></li>
+                  <li class="dropdown-divider"></li>
+                  <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Log out</a></li>
+                </ul>
+              </li>
+              <li class="separator d-lg-none"></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="tim-icons icon-simple-remove"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-chart">
+              <div class="card-header ">
+                <div class="row">
+                  <div class="col-sm-6 text-left">
+                    <h5 class="card-category">投票数据图表</h5>
+                    <h2 class="card-title">折线图</h2>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart-area" id="maintable" style="width: 1000px;height:450px;" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card card-chart">
+              <div class="card-header">
+                <h5 class="card-category">柱状图</h5>
+                <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> 支持人数</h3>
+              </div>
+              <div  style="width: 400px;height:450px;" id="table1">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card card-chart">
+              <div class="card-header">
+                <h5 class="card-category">饼状图</h5>
+                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 支持人数</h3>
+              </div>
+              <div  style="width: 300px;height:450px;" id="table2">
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card card-chart">
+              <div class="card-header">
+                <h5 class="card-category">漏斗图</h5>
+                <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 支持人数</h3>
+              </div>
+              <div  style="width: 350px;height:450px;" id="table3">
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <footer class="footer">
+        <div class="container-fluid">
+          <ul class="nav">
+            <li class="nav-item">
+              <a href="javascript:void(0)" class="nav-link">
+                Creative Tim
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="javascript:void(0)" class="nav-link">
+                About Us
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="javascript:void(0)" class="nav-link">
+                Blog
+              </a>
+            </li>
+          </ul>
+          <div class="copyright">
+            ©
+            <script>
+              document.write(new Date().getFullYear())
+            </script>2018 made with <i class="tim-icons icon-heart-2"></i> by
+            <a href="javascript:void(0)" target="_blank">Creative Tim</a> for a better web.More Templates <a href="#" target="_blank" title="">GDIO</a> - Collect from <a href="#" title="" target="_blank">PAGE</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <div th:replace="temp::Suspendedframe">
+  </div>
+  <!--   Core JS Files   -->
+  <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!--  Google Maps Plugin    -->
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <!-- Chart JS-->
+  <script src="../assets/js/plugins/chartjs.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/black-dashboard.min.js?v=1.0.0"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
+  <script src="../assets/demo/demo.js"></script>
+  <script src="../assets/js/plugins/echarts.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $().ready(function() {
+        $sidebar = $('.sidebar');
+        $navbar = $('.navbar');
+        $main_panel = $('.main-panel');
+
+        $full_page = $('.full-page');
+
+        $sidebar_responsive = $('body > .navbar-collapse');
+        sidebar_mini_active = true;
+        white_color = false;
+
+        window_width = $(window).width();
+
+        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+
+
+        $('.fixed-plugin a').click(function(event) {
+          if ($(this).hasClass('switch-trigger')) {
+            if (event.stopPropagation) {
+              event.stopPropagation();
+            } else if (window.event) {
+              window.event.cancelBubble = true;
+            }
+          }
+        });
+
+        $('.fixed-plugin .background-color span').click(function() {
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+
+          var new_color = $(this).data('color');
+
+          if ($sidebar.length != 0) {
+            $sidebar.attr('data', new_color);
+          }
+
+          if ($main_panel.length != 0) {
+            $main_panel.attr('data', new_color);
+          }
+
+          if ($full_page.length != 0) {
+            $full_page.attr('filter-color', new_color);
+          }
+
+          if ($sidebar_responsive.length != 0) {
+            $sidebar_responsive.attr('data', new_color);
+          }
+        });
+
+        $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
+          var $btn = $(this);
+
+          if (sidebar_mini_active == true) {
+            $('body').removeClass('sidebar-mini');
+            sidebar_mini_active = false;
+            blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
+          } else {
+            $('body').addClass('sidebar-mini');
+            sidebar_mini_active = true;
+            blackDashboard.showSidebarMessage('Sidebar mini activated...');
+          }
+
+          // we simulate the window Resize so the charts will get updated in realtime.
+          var simulateWindowResize = setInterval(function() {
+            window.dispatchEvent(new Event('resize'));
+          }, 180);
+
+          // we stop the simulation of Window Resize after the animations are completed
+          setTimeout(function() {
+            clearInterval(simulateWindowResize);
+          }, 1000);
+        });
+
+        $('.switch-change-color input').on("switchChange.bootstrapSwitch", function() {
+          var $btn = $(this);
+
+          if (white_color == true) {
+
+            $('body').addClass('change-background');
+            setTimeout(function() {
+              $('body').removeClass('change-background');
+              $('body').removeClass('white-content');
+            }, 900);
+            white_color = false;
+          } else {
+
+            $('body').addClass('change-background');
+            setTimeout(function() {
+              $('body').removeClass('change-background');
+              $('body').addClass('white-content');
+            }, 900);
+
+            white_color = true;
+          }
+
+
+        });
+
+        $('.light-badge').click(function() {
+          $('body').addClass('white-content');
+        });
+
+        $('.dark-badge').click(function() {
+          $('body').removeClass('white-content');
+        });
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+
+    });
+  </script>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS &&
+      TrackJS.install({
+        token: "ee6fab19c5a04ac1a32a645abde4613a",
+        application: "black-dashboard-free"
+      });
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('table1'),"light");
+      var myChart2 = echarts.init(document.getElementById('table2'),"light");
+      var myChart3 = echarts.init(document.getElementById('table3'),"light");
+      var myChart4 = echarts.init(document.getElementById('maintable'),"light");
+      //数据加载完之前先显示一段简单的loading动画
+      myChart.showLoading();
+      myChart2.showLoading();
+      myChart3.showLoading();
+      myChart4.showLoading();
+      var names=[];    //横坐标数组（实际用来盛放X轴坐标值）
+      var values=[];    //纵坐标数组（实际用来盛放Y坐标值）
+      var data2=[];
+      $.ajax({
+        type : "post",
+        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        url : "/showtable",    //请求发送到dataActiont处
+        data : {},
+        dataType : "json",        //返回数据形式为json
+        success : function(result) {
+          //请求成功时执行该函数内容，result即为服务器返回的json对象
+          if (result) {
+            for(var i=0;i<result.length;i++){
+              names.push(result[i].name);
+              values.push(result[i].num);
+              data2.push({value:result[i].num,name:result[i].name});
+            }
+            myChart.hideLoading();    //隐藏加载动画
+            myChart2.hideLoading();
+            myChart3.hideLoading();
+            myChart4.hideLoading();
+            option={        //加载数据图表
+              tooltip: {},
+              legend: {
+                data:['支持人数']
+              },
+              xAxis: {
+                data: names,
+                axisLabel: {
+                  interval:0,//代表显示所有x轴标签显示
+                  rotate:45, //代表逆时针旋转45度
+                }
+              },
+              yAxis: {
+                type: 'value'
+              },
+              series: [{
+                // 根据名字对应到相应的系列
+                name: '數量',//薪资 series not exists. Legend data should be same with series name or data name.
+                type: 'bar',
+                barWidth : 10,
+                barCategoryGap:'20%',
+                data: values
+              }]
+            }
+            option2={        //加载数据图表
+              series: [{
+                // 根据名字对应到相应的系列
+                name: '數量',//薪资 series not exists. Legend data should be same with series name or data name.
+                type: 'pie',
+                radius: '55%',
+                roseType: 'angle',
+                data: data2
+              }]
+            }
+            option3={        //加载数据图表
+              title: {
+                text: '',
+                subtext: ''
+              },
+              tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c}%"
+              },
+              toolbox: {
+                feature: {
+                  dataView: {readOnly: false},
+                  restore: {},
+                  saveAsImage: {}
+                }
+              },
+              legend: {
+                data: names
+              },
+
+              series: [
+                {
+                  name:'',
+                  type:'funnel',
+                  left: '10%',
+                  top: 60,
+                  //x2: 80,
+                  bottom: 60,
+                  width: '80%',
+                  // height: {totalHeight} - y - y2,
+                  min: 0,
+                  max: 100,
+                  minSize: '0%',
+                  maxSize: '100%',
+                  sort: 'descending',
+                  gap: 2,
+                  label: {
+                    show: true,
+                    position: 'inside'
+                  },
+                  labelLine: {
+                    length: 10,
+                    lineStyle: {
+                      width: 1,
+                      type: 'solid'
+                    }
+                  },
+                  itemStyle: {
+                    borderColor: '#fff',
+                    borderWidth: 1
+                  },
+                  emphasis: {
+                    label: {
+                      fontSize: 20
+                    }
+                  },
+                  data:
+                    data2
+                }
+              ]
+            }
+            option4={
+              color : [ '#6a7985' ],
+              //标题样式
+              title : {
+                text : '各选项支持人数',
+                textStyle : {
+                  color : 'white',
+                },
+                left : 'center'
+              },
+              //菜单
+              legend : {
+                show : false
+              },
+              //提示框
+              tooltip : {
+                trigger : 'axis',
+                position : 'top',
+                axisPointer : {
+                  type : 'cross',
+                  label : {
+                    backgroundColor : '#6a7985'
+                  }
+                }
+              },
+              //图形位置
+              grid : {
+                left : '4%',
+                right : '6%',
+                bottom : '4%',
+                top : 80,
+                containLabel : true
+              },
+              //x轴
+              xAxis : [ {
+                type : 'category',
+                //坐标轴两边留白策略，即x轴坐标点开始与结束点位置都不在最边缘
+                boundaryGap : true,
+                axisLine : {
+                  show : true,
+                  //x轴线样式
+                  lineStyle : {
+                    color : '#17273B',
+                    width : 1,
+                    type : 'solid'
+                  }
+                },
+                //x轴字体设置
+                axisLabel : {
+                  show : true,
+                  fontSize : 12,
+                  color : 'white'
+                },
+                data : names
+              } ],
+              //y轴
+              yAxis : [ {
+                type : 'value',
+                //y轴字体设置
+                axisLabel : {
+                  show : true,
+                  color : 'white',
+                  fontSize : 12
+                },
+                //y轴线设置不显示
+                axisLine : {
+                  show : false
+                },
+                //与x轴平行的线样式
+                splitLine : {
+                  show : true,
+                  lineStyle : {
+                    color : '#17273B',
+                    width : 1,
+                    type : 'solid',
+                  }
+                }
+              } ],
+              series : [ {
+                name : '人数',
+                type : 'line',
+                //折线平滑
+                smooth : true,
+                symbol : 'circle',
+                symbolSize : 6,
+                //线条样式
+                lineStyle : {
+                  color : {
+                    type : 'linear',
+                    x : 0,
+                    y : 0,
+                    x2 : 0,
+                    y2 : 1,
+                    colorStops : [ {
+                      offset : 0,
+                      // 0% 处的颜色
+                      color : '#6ae6dd'
+                    }, {
+                      offset : 1,
+                      // 100% 处的颜色
+                      color : 'red'
+                    } ],
+                    globalCoord : false
+                  },
+                  width : 2,
+                  type : 'solid',
+                },
+                //折线连接点样式
+                itemStyle : {
+                  color : '#00E5DE'
+                },
+                //折线堆积区域样式
+                areaStyle : {
+                  color : '#004c5E'
+                },
+                data : values
+              } ]
+            };
+            myChart.setOption(option);
+            myChart2.setOption(option2);
+            myChart3.setOption(option3);
+            myChart4.setOption(option4);
+          }
+        },
+        error : function(errorMsg) {
+          //请求失败时执行该函数
+          alert("图表请求数据失败!");
+          myChart.hideLoading();
+        }
+      });//end ajax
+    });
+  </script>
+</body>
+
+</html>

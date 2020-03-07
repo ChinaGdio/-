@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.themeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册你的账号</title>
+	
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/tooplate.css">
+</head>
+
+<body id="register">
+    <div class="container">
+        <div class="row tm-register-row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-register-col-l">
+                <form th:action="@{/register}" method="post">
+                    <div class="mb-2">
+                        <label class="mr-4">
+                            <input class="with-gap" name="gender" type="radio" value="1" />
+                            <span>Mr.</span>
+                        </label>
+                        <label class="mr-4">
+                            <input class="with-gap" name="gender" type="radio" value="0" />
+                            <span>Ms.</span>
+                        </label>
+                        <label>
+                            <input class="with-gap" name="gender" type="radio" value="-1" />
+                            <span>Mrs.</span>
+                        </label>
+                    </div>
+
+                    <div class="input-field">
+                        <input placeholder="用户名" name="userName" type="text" class="validate">
+                    </div>
+                    <div class="input-field">
+                        <input placeholder="电子邮箱" name="email" type="text" class="validate">
+                    </div>
+                    <div class="input-field">
+                        <input placeholder="密码" name="password" type="password" class="validate">
+                    </div>
+                    <div class="input-field">
+                        <p style="color: red" th:text="${msg!=null}?${msg}"></p>
+                    </div>
+                    <div class="text-right mt-4">
+                        <button type="submit" class="waves-effect btn-large btn-large-white px-4 black-text">注册</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 tm-register-col-r">
+                <header class="mb-5">
+                    <h3 class="mt-0 text-white">注册你的个人账号</h3>
+                    <p class="grey-text">填写基本信息以注册你的账号.
+                        从而登陆.</p>
+                    <p class="grey-text">
+                        个人信息是保密的
+                    </p>
+                </header>
+
+            </div>
+        </div>
+        <footer class="row tm-mt-big mb-3">
+            <div class="col-xl-12">
+                <p class="text-center grey-text text-lighten-2 tm-footer-text-small">
+                    Copyright &copy; 2020 Company Name
+                    
+                    - Design:  Tooplate / More Templates <a href="#" target="_blank" title="">GDIO</a> - Collect from <a href="#" title="" target="_blank">PAGE</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/jquery-3.2.1.slim.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('select').formSelect();
+        });
+    </script>
+</body>
+
+</html>
